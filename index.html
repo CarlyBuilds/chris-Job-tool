@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chris Job Tool</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3f5f7;
+      color: #182026;
+    }
+
+    header {
+      background: #182026;
+      color: white;
+      padding: 22px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      opacity: 0.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+
+    .hero h2 {
+      margin-top: 0;
+    }
+
+    .primary-button {
+      display: block;
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 18px;
+      background: #182026;
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #66727a;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back {
+      border: 0;
+      background: none;
+      font-size: 16px;
+      padding: 0;
+      margin-bottom: 18px;
+      cursor: pointer;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      font-weight: 650;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccd2d6;
+      border-radius: 10px;
+      font-size: 16px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .photo-box {
+      border: 2px dashed #b9c1c6;
+      border-radius: 14px;
+      padding: 28px;
+      text-align: center;
+      margin-top: 8px;
+      background: #fafafa;
+    }
+
+    .status {
+      background: #eef2f4;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 650px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Chris Job Tool</h1>
+  <p>Plan it. Price it. Profit from it.</p>
+</header>
+
+<div class="container">
+
+  <!-- HOME SCREEN -->
+
+  <section id="home">
+
+    <div class="hero">
+      <h2>What are we working on?</h2>
+      <p>
+        Start a job and build an accurate plan, material list,
+        true cost and customer quote.
+      </p>
+
+      <button class="primary-button" onclick="showNewJob()">
+        + New Job
+      </button>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Current Jobs</h3>
+        <p>Quotes and jobs currently in progress.</p>
+      </div>
+
+      <div class="card">
+        <h3>Job History</h3>
+        <p>Compare previous estimates with what actually happened.</p>
+      </div>
+
+      <div class="card">
+        <h3>My Tools</h3>
+        <p>Keep track of the equipment Chris already owns.</p>
+      </div>
+
+      <div class="card">
+        <h3>Suppliers</h3>
+        <p>Preferred suppliers, prices and trade accounts.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- NEW JOB SCREEN -->
+
+  <section id="newJob" class="hidden">
+
+    <button class="back" onclick="showHome()">
+      ← Back
+    </button>
+
+    <div class="hero">
+
+      <h2>New Job</h2>
+
+      <p>
+        Give us what you know. The tool will work out what is
+        missing before the job is priced.
+      </p>
+
+      <label>Customer name</label>
+      <input id="customerName" type="text" placeholder="Customer name">
+
+      <label>Job address</label>
+      <input id="jobAddress" type="text" placeholder="Job address">
+
+      <label>What does the customer want?</label>
+      <textarea
+        id="jobDescription"
+        placeholder="Describe the job in normal words..."
+      ></textarea>
+
+      <label>Measurements</label>
+      <textarea
+        id="measurements"
+        placeholder="Add any measurements Chris has taken..."
+      ></textarea>
+
+      <label>Job photos</label>
+
+      <div class="photo-box">
+        <input
+          id="jobPhotos"
+          type="file"
+          accept="image/*"
+          multiple
+        >
+        <p>Upload photos from the job.</p>
+      </div>
+
+      <label>Other notes</label>
+      <textarea
+        id="notes"
+        placeholder="Access, customer requests, materials, problems, anything useful..."
+      ></textarea>
+
+      <div class="status">
+        🔒 Internal job information. Customer quote comes later.
+      </div>
+
+      <button class="primary-button" onclick="analyseJob()">
+        Analyse Job
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ANALYSIS SCREEN -->
+
+  <section id="analysis" class="hidden">
+
+    <button class="back" onclick="showNewJob()">
+      ← Back to job
+    </button>
+
+    <div class="hero">
+
+      <h2>Job Review</h2>
+
+      <p id="analysisIntro"></p>
+
+      <h3>Before we price it</h3>
+
+      <div class="status">
+        🟠 We will check measurements, materials, tools,
+        labour and anything that could damage the profit.
+      </div>
+
+      <h3 style="margin-top:24px;">Next stages</h3>
+
+      <p>✓ Confirm job scope</p>
+      <p>✓ Check missing information</p>
+      <p>✓ Calculate materials</p>
+      <p>✓ Check Chris's tools</p>
+      <p>✓ Estimate labour</p>
+      <p>✓ Calculate true job cost</p>
+      <p>✓ Protect profit margin</p>
+      <p>✓ Produce customer quote</p>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<script>
+
+  function hideAll() {
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("newJob").classList.add("hidden");
+    document.getElementById("analysis").classList.add("hidden");
+  }
+
+  function showHome() {
+    hideAll();
+    document.getElementById("home").classList.remove("hidden");
+  }
+
+  function showNewJob() {
+    hideAll();
+    document.getElementById("newJob").classList.remove("hidden");
+  }
+
+  function analyseJob() {
+
+    const customer =
+      document.getElementById("customerName").value.trim();
+
+    const description =
+      document.getElementById("jobDescription").value.trim();
+
+    hideAll();
+
+    document.getElementById("analysis")
+      .classList.remove("hidden");
+
+    let message = "Job created.";
+
+    if (customer) {
+      message = "Reviewing the job for " + customer + ".";
+    }
+
+    if (description) {
+      message +=
+        " We'll now check whether there is enough information to price it properly.";
+    }
+
+    document.getElementById("analysisIntro").textContent = message;
+  }
+
+</script>
+
+</body>
+</html>
