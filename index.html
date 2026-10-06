@@ -328,33 +328,75 @@
     document.getElementById("newJob").classList.remove("hidden");
   }
 
-  function analyseJob() {
+ 
 
-    const customer =
-      document.getElementById("customerName").value.trim();
+    
+async function analyseJob() {
 
-    const description =
-      document.getElementById("jobDescription").value.trim();
+  const customerName =
+    document.getElementById("customerName").value.trim();
 
-    hideAll();
+  const jobAddress =
+    document.getElementById("jobAddress").value.trim();
 
-    document.getElementById("analysis")
-      .classList.remove("hidden");
+  const jobDescription =
+    document.getElementById("jobDescription").value.trim();
 
-    let message = "Job created.";
+  const measurements =
+    document.getElementById("measurements").value.trim();
 
-    if (customer) {
-      message = "Reviewing the job for " + customer + ".";
-    }
+  const notes =
+    document.getElementById("notes").value.trim();
 
-    if (description) {
-      message +=
-        " We'll now check whether there is enough information to price it properly.";
-    }
-
-    document.getElementById("analysisIntro").textContent = message;
+  if (!jobDescription) {
+    alert("Please add a job description first.");
+    return;
   }
 
+  hideAll();
+  document.getElementById("analysis").classList.remove("hidden");
+
+  const analysisIntro =
+    document.getElementById("analysisIntro");
+
+  analysisIntro.textContent =
+    "🧠 Analysing the job...";
+
+  try {
+
+    const response = await fetch("/api/analyse-job", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        customerName,
+        jobAddress,
+        jobDescription,
+        measurements,
+        notes
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Analysis failed");
+    }
+
+    analysisIntro.innerText = data.analysis;
+
+  } catch (error) {
+
+    console.error(error);
+
+    analysisIntro.textContent =
+      "⚠️ We couldn't analyse this job. Please try again.";
+
+  }
+}
 </script>
 
 </body>
